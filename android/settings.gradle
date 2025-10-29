@@ -1,0 +1,20 @@
+// This settings.gradle ensures the Android Gradle project is recognized as a Flutter Android project
+rootProject.name = 'project'
+
+def localPropertiesFile = rootProject.file('local.properties')
+def flutterRoot = null
+if (localPropertiesFile.exists()) {
+    def Properties localProps = new Properties()
+    localPropertiesFile.withInputStream { stream -> localProps.load(stream) }
+    flutterRoot = localProps.getProperty('flutter.sdk')
+}
+flutterRoot = flutterRoot ?: System.getenv('FLUTTER_ROOT')
+
+if (flutterRoot == null) {
+    throw new GradleException("Flutter SDK not found. Define location with flutter.sdk in the local.properties file or set FLUTTER_ROOT environment variable.")
+}
+
+include ':app'
+
+// Apply the Flutter Gradle logic
+apply from: "$flutterRoot/packages/flutter_tools/gradle/flutter.gradle"
